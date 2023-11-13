@@ -9,7 +9,8 @@ sqlalchemy_database_url_obj = SQLAlchemyURL(
   username=settings.database_username,
   password=settings.database_password,
   host=settings.database_hostname,
-  database=settings.database_name
+  database=settings.database_name,
+  port=settings.database_port
 )
 engine = create_engine(sqlalchemy_database_url_obj)
 
