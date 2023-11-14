@@ -17,6 +17,26 @@ router = APIRouter(
   tags=['Posts']
 )
 
+
+def _get_posts(db, limit, skip, search, id=None):
+
+  filter_conds = [models.Post.title.contains(search)]
+  if id:
+    filter_conds.append(models.Post.id == id)
+
+  results = (db
+    .query(models.Post, sqlalchemy.func.count(models.Vote.post_id).label("num_votes"))
+    .join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True)
+    .group_by(models.Post.id)
+    .filter(*filter_conds)
+    .order_by(sqlalchemy.desc('created_at'))
+    .limit(limit)
+    .offset(skip)
+    .all()
+    )
+
+  return results
+
 # @router.get("/")
 @router.get("/", response_model=ty.List[schemas.PostOut])
 def get_posts(
@@ -28,16 +48,7 @@ def get_posts(
   ):
   # posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
 
-  results = (db
-    .query(models.Post, sqlalchemy.func.count(models.Vote.post_id).label("num_votes"))
-    .join(models.Vote, models.Vote.post_id == models.Post.id, isouter=True)
-    .group_by(models.Post.id)
-    .filter(models.Post.title.contains(search))
-    .order_by(sqlalchemy.desc('created_at'))
-    .limit(limit)
-    .offset(skip)
-    .all()
-    )
+  results = _get_posts(db, limit, skip, search)
   return results
 
 
