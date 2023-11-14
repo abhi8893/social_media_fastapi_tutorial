@@ -11,7 +11,7 @@ from .routers import post, user, auth, vote
 models.Base.metadata.create_all(bind=engine)
 
 # setup loggers
-logging.config.dictConfig(log_config)
+# logging.config.dictConfig(log_config)
 
 # get root logger
 logger = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ app.include_router(vote.router)
 
 @app.get('/')
 def root():
-  return {'message': 'Welcome to my improved app!'}
+  return {'message': 'Welcome to my app!'}
 
 
 
