@@ -12,7 +12,13 @@ sqlalchemy_database_url_obj = SQLAlchemyURL.create(
   database=settings.database_name,
   port=settings.database_port
 )
-engine = create_engine(sqlalchemy_database_url_obj)
+
+if settings.db_ssl_require:
+  extra_kwargs = dict(connect_args={'sslmode':'require'}, echo=True)
+else:
+  extra_kwargs = dict()
+
+engine = create_engine(sqlalchemy_database_url_obj, **extra_kwargs)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
