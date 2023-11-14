@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def vote(
   vote: schemas.Vote, 
   user: models.User = Depends(get_current_user),
