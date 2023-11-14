@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from .config import settings
 
 
-sqlalchemy_database_url_obj = SQLAlchemyURL(
+sqlalchemy_database_url_obj = SQLAlchemyURL.create(
   "postgresql",
   username=settings.database_username,
   password=settings.database_password,
