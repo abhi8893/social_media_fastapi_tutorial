@@ -8,7 +8,7 @@ from .routers import post, user, auth, vote
 
 
 # This creates all the tables from the models
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 # setup loggers
 # logging.config.dictConfig(log_config)

@@ -1,9 +1,6 @@
-from fastapi.testclient import TestClient
-from app.main import app
 from app.config import settings
 from sqlalchemy.engine import create_engine, URL as SQLAlchemyURL
 from sqlalchemy.orm import sessionmaker
-import pytest
 
 
 sqlalchemy_database_url_obj = SQLAlchemyURL.create(

@@ -1,7 +1,8 @@
 """"""
 import pytest
+from app.main import app
 from app.database import get_db, Base
-from .database import app, engine, TestingSessionLocal
+from .database import engine, TestingSessionLocal
 from fastapi.testclient import TestClient
 from app import oauth2, models
 
